@@ -7,9 +7,9 @@ async function promptUser() {
     {
       type: 'input',
       name: 'text',
-      message: chalk.hex('#FF9933')('You:'),
-      prefix: chalk.hex('#FFD700')('👉'),
-      transformer: val => chalk.hex('#FFD700')(val),
+      message: chalk.hex('#10B981')('You:'),
+      prefix: chalk.hex('#059669')('❯'),
+      transformer: val => chalk.hex('#A7F3D0')(val),
     },
   ]);
   return text;

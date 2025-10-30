@@ -3,11 +3,11 @@ import boxen from 'boxen';
 
 //* Function to print system messages
 function printSystem(text) {
-  const boxed = boxen(chalk.hex('#FFD700')(text), {
+  const boxed = boxen(chalk.hex('#A7F3D0')(text), {
     padding: 1,
     margin: 1,
     borderStyle: 'round',
-    borderColor: '#FF9933',
+    borderColor: '#10B981',
   });
   console.log(boxed);
 }
@@ -15,11 +15,11 @@ function printSystem(text) {
 //* Function to print help
 function printHelp() {
   const helpText = `
-  ${chalk.hex('#FFD700').bold('Commands:')}
-  ${chalk.hex('#FF9933')('/help')} - Show this help
-  ${chalk.hex('#FF9933')('/exit')} - Quit the chat
+  ${chalk.hex('#10B981').bold('Commands:')}
+  ${chalk.hex('#34D399')('/help')} - Show this help
+  ${chalk.hex('#34D399')('/exit')} - Quit the chat
 
-  ${chalk.hex('#FFD700').bold('Tips:')}
+  ${chalk.hex('#10B981').bold('Tips:')}
   - Ask Questions or paste content to discuss.
   - If the assistant lists options (1., 2., 3.), you'll be prompted to pick one.
   `;
@@ -28,10 +28,18 @@ function printHelp() {
     padding: 1,
     margin: 1,
     borderStyle: 'classic',
-    borderColor: '#FF9933', // Saffron border
+    borderColor: '#059669',
   });
   console.log(boxed);
 }
 
+//* Function to print user input
+function printUser(text) {
+  const userLabel = chalk.hex('#10B981').bold('You:');
+  const userMessage = chalk.hex('#ECFDF5')(text);
+
+  console.log(`\n${userLabel} ${userMessage}\n`);
+}
+
 //* Exporting functions
-export { printSystem, printHelp };
+export { printSystem, printHelp, printUser };
