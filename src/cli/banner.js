@@ -37,7 +37,6 @@ function renderBanner() {
     borderColor: '#FF9933',
     borderStyle: 'round',
     textAlignment: 'center',
-    float: 'center',
   });
 
   console.log(boxedBanner);
