@@ -1,0 +1,55 @@
+{
+  "name": "vedacli",
+  "version": "1.0.0",
+  "description": "An AI-powered command-line interface built on Gemini. VedaCLI enhances your terminal experience with intelligent command suggestions, automation, and seamless workflow optimization.",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/soumadip-dev/VedaCLI.git"
+  },
+  "keywords": [
+    "cli",
+    "ai",
+    "artificial-intelligence",
+    "command-line",
+    "terminal",
+    "automation",
+    "productivity",
+    "developer-tools",
+    "nodejs",
+    "javascript",
+    "ai-cli",
+    "smart-terminal",
+    "indian-tech",
+    "veda",
+    "knowledge"
+  ],
+  "author": "Soumadip Majila",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/soumadip-dev/VedaCLI/issues"
+  },
+  "homepage": "https://github.com/soumadip-dev/VedaCLI#readme",
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "bin": {
+    "vedacli": "./src/index.js"
+  },
+  "dependencies": {
+    "boxen": "^8.0.1",
+    "chalk": "^5.6.2",
+    "dotenv": "^17.2.3",
+    "figlet": "^1.9.3",
+    "inquirer": "^12.10.0",
+    "ora": "^9.0.0"
+  }
+}
