@@ -41,5 +41,27 @@ function printUser(text) {
   console.log(`\n${userLabel} ${userMessage}\n`);
 }
 
+//* Function to print assistant response (start)
+function printAssistantStart() {
+  process.stdout.write(chalk.hex('#10B981').bold('🧠 VedaAI') + ': ');
+}
+
+//* Function to print assistant response (streaming)
+function printAssistantChunk(chunk) {
+  process.stdout.write(chalk.hex('#34D399')(chunk));
+}
+
+//* Function to print assistant response (end)
+function printAssistantEnd() {
+  process.stdout.write('\n');
+}
+
 //* Exporting functions
-export { printSystem, printHelp, printUser };
+export {
+  printSystem,
+  printHelp,
+  printUser,
+  printAssistantStart,
+  printAssistantChunk,
+  printAssistantEnd,
+};
