@@ -21,6 +21,8 @@
 
 ## 🌟 Features
 
+**🚧 Under development**
+
 ## ⚙️ Tech Stack
 
 - **🎨 Frontend**: React, Nextjs
