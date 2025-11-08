@@ -1,6 +1,10 @@
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
+  reactCompiler: true,
+  experimental: {
+    turbopackFileSystemCacheForDev: true,
+  },
   images: {
     domains: ['avatars.githubusercontent.com'],
     // Or use remotePatterns for more control (recommended):
