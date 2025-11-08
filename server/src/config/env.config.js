@@ -12,6 +12,7 @@ const ENV = {
   BETTER_AUTH_SECRET: process.env.BETTER_AUTH_SECRET,
   BETTER_AUTH_URL: process.env.BETTER_AUTH_URL,
   FRONTEND_URL: process.env.FRONTEND_URL,
+  BASE_URL: process.env.BASE_URL,
 };
 
 export default ENV;
