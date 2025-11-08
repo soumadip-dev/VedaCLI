@@ -1,31 +1,75 @@
-# VedaCLI
+<h1 align="center">
+  <br>
+  VedaCLI 🤖
+  <br>
+</h1>
 
-A command-line interface tool.
+<p align="center">
+  An AI-powered command-line interface built on Gemini.
+</p>
 
-## Installation
+<table align="center">
+  <tr>
+    <td align="center">
+      <img src="./client/screenshots/Login-Page-frontend.png" alt="Login Page">
+    </td>
+    <td align="center">
+      <img src="./client/screenshots/Home-Page-frontend.png" alt="Register Page">
+    </td>
+  </tr>
+</table>
+
+## 🌟 Features
+
+## ⚙️ Tech Stack
+
+- **🎨 Frontend**: React, Nextjs
+- **🛠 Backend**: Node.js, Express.js, BetterAuth
+- **🗄 Database**: Postgres, Prisma
+
+## 📦 Installation
+
+### 1. Clone and setup
 
 ```bash
-# Installation instructions here
+git clone https://github.com/soumadip-dev/VedaCLI-MERN.git
+cd VedaCLI-MERN
 ```
 
-## Usage
+### 2. Frontend setup
 
 ```bash
-# Usage examples here
+cd client
+npm install
 ```
 
-## Features
-
-- Feature 1
-- Feature 2
-- Feature 3
-
-## Development
+### 3. Backend setup
 
 ```bash
-# Setup instructions
+cd server
+npm install
+
+# Make CLI executable and create global symlink
+npm run dev:link
+
+# Test the CLI
+veda --version
 ```
 
-## License
+#### Available Scripts in backend
 
-[License information]
+| Script             | Purpose               |
+| ------------------ | --------------------- |
+| `npm start`        | Run main application  |
+| `npm run dev`      | Run with auto-reload  |
+| `npm run cli`      | Test CLI locally      |
+| `npm run dev:link` | Setup global CLI link |
+
+### Usage
+
+After installation, you can use the `veda` command globally:
+
+```bash
+veda --help
+veda --version
+```
