@@ -1,4 +1,4 @@
-import { CONFIG_DIR, TOKEN_FILE } from '../cli/commands/auth/login';
+import { CONFIG_DIR, TOKEN_FILE } from '../cli/commands/auth/login.js';
 
 //* Get stored token
 export async function getStoredToken() {
