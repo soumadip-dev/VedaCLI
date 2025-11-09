@@ -36,3 +36,17 @@ export async function storeToken(token) {
     return false;
   }
 }
+
+//* Check if token is expired
+export async function isTokenExpired() {
+  const token = await getStoredToken();
+  if (!token || !token.expires_at) {
+    return true;
+  }
+
+  const expiresAt = new Date(token.expires_at);
+  const now = new Date();
+
+  // Consider expired if less than 5 minutes remaining
+  return expiresAt.getTime() - now.getTime() < 5 * 60 * 1000;
+}
