@@ -10,7 +10,7 @@ const PORT = ENV.PORT || 8080;
 // Enable CORS
 app.use(
   cors({
-    origin: 'http://localhost:3000',
+    origin: ENV.FRONTEND_URL,
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
   })
@@ -31,6 +31,11 @@ app.get('/api/me', async (req, res) => {
     headers: fromNodeHeaders(req.headers),
   });
   return res.json(session);
+});
+
+app.get('/device', async (req, res) => {
+  const { user_code } = req.query;
+  res.redirect(`${ENV.FRONTEND_URL}/device?user_code=${user_code}`);
 });
 
 // Start server
