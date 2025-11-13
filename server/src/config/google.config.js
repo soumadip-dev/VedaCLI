@@ -1,4 +1,4 @@
-import ENV from './env.config';
+import ENV from './env.config.js';
 
 export const config = {
   googleApiKey: ENV.GOOGLE_GENERATIVE_AI_API_KEY || '',
