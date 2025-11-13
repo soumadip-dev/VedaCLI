@@ -24,6 +24,14 @@ export class AIService {
         maxTokens: config.maxTokens,
       };
 
+      // Add tools if provided with maxSteps for multi-step tool calling
+      if (tools && Object.keys(tools).length > 0) {
+        streamConfig.tools = tools;
+        streamConfig.maxSteps = 5; // Allow up to 5 tool call steps
+
+        console.log(chalk.gray(`[DEBUG] Tools enabled: ${Object.keys(tools).join(', ')}`));
+      }
+
       const result = streamText(streamConfig);
 
       let fullResponse = '';
@@ -39,13 +47,35 @@ export class AIService {
       // IMPORTANT: Await the result to get access to steps, toolCalls, etc.
       const fullResult = await result;
 
+      const toolCalls = [];
+      const toolResults = [];
+
+      // Collect tool calls from all steps (if they exist)
+      if (fullResult.steps && Array.isArray(fullResult.steps)) {
+        for (const step of fullResult.steps) {
+          if (step.toolCalls && step.toolCalls.length > 0) {
+            for (const toolCall of step.toolCalls) {
+              toolCalls.push(toolCall);
+              if (onToolCall) {
+                onToolCall(toolCall);
+              }
+            }
+          }
+
+          // Collect tool results
+          if (step.toolResults && step.toolResults.length > 0) {
+            toolResults.push(...step.toolResults);
+          }
+        }
+      }
+
       return {
         content: fullResponse,
         finishReason: fullResult.finishReason,
         usage: fullResult.usage,
-        // toolCalls,
-        // toolResults,
-        // steps: fullResult.steps,
+        toolCalls,
+        toolResults,
+        steps: fullResult.steps,
       };
     } catch (error) {
       console.error(chalk.red('AI Service Error:'), error.message);
