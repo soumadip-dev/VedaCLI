@@ -4,7 +4,7 @@ import yoctoSpinner from 'yocto-spinner';
 import { getStoredToken } from '../../../lib/token.js';
 import prisma from '../../../lib/db.js';
 import { select } from '@clack/prompts';
-// import { startChat } from '../../chat/chat-with-ai.js';
+import { startChat } from '../../chat/chat-with-ai.js';
 // import { startToolChat } from '../../chat/chat-with-ai-tool.js';
 // import { startAgentChat } from '../../chat/chat-with-ai-agent.js';
 
@@ -60,21 +60,21 @@ const wakeUpAction = async () => {
   console.log(chalk.hex(THEME.muted)('────────────────────'));
 
   const choice = await select({
-    message: chalk.hex(THEME.primary).bold('🚀 Choose your AI experience:'),
+    message: chalk.hex(THEME.primary).bold('👩‍💻 Choose your AI experience:'),
     options: [
       {
         value: 'chat',
-        label: chalk.hex(THEME.secondary)('💬 Simple Chat'),
+        label: chalk.hex(THEME.secondary)('Simple Chat'),
         hint: chalk.hex(THEME.muted)('Direct conversation with AI'),
       },
       {
         value: 'tool',
-        label: chalk.hex(THEME.accent)('🛠️  Tool Calling'),
+        label: chalk.hex(THEME.accent)('Tool Calling'),
         hint: chalk.hex(THEME.muted)('Enhanced chat with Google Search, Code Execution'),
       },
       {
         value: 'agent',
-        label: chalk.hex(THEME.warning)('🤖 Agentic Mode'),
+        label: chalk.hex(THEME.warning)('Agentic Mode'),
         hint: chalk.hex(THEME.muted)('Advanced AI agent (Coming soon)'),
       },
     ],
@@ -82,8 +82,8 @@ const wakeUpAction = async () => {
 
   switch (choice) {
     case 'chat':
-      // await startChat('chat');
-      console.log(chalk.hex(THEME.success).bold('\n💬 Launching Simple Chat...'));
+      await startChat('chat');
+      // console.log(chalk.hex(THEME.success).bold('\n💬 Launching Simple Chat...'));
       break;
     case 'tool':
       // await startToolChat();

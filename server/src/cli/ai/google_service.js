@@ -1,5 +1,5 @@
 import { google } from '@ai-sdk/google';
-import { streamText, generateObject } from 'ai';
+import { streamText, generateObject, convertToModelMessages } from 'ai';
 import { config } from '../../config/google.config.js';
 import chalk from 'chalk';
 
@@ -14,15 +14,7 @@ export class AIService {
     });
   }
 
-  /**
-   * Send a message and get streaming response
-   * @param {Array} messages - Array of message objects {role, content}
-   * @param {Function} onChunk - Callback for each text chunk
-   * @param {Object} tools - Optional tools object
-   * @param {Function} onToolCall - Callback for tool calls
-   * @returns {Promise<Object>} Full response with content, tool calls, and usage
-   */
-
+  //* Send a message and get streaming response
   async sendMessage(messages, onChunk, tools = undefined, onToolCall = null) {
     try {
       const streamConfig = {
@@ -62,12 +54,7 @@ export class AIService {
     }
   }
 
-  /**
-   * Get a non-streaming response
-   * @param {Array} messages - Array of message objects
-   * @param {Object} tools - Optional tools
-   * @returns {Promise<string>} Response text
-   */
+  //* Get a non-streaming response
   async getMessage(messages, tools = undefined) {
     let fullResponse = '';
     await this.sendMessage(messages, chunk => {
