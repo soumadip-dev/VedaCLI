@@ -8,10 +8,6 @@
     "start": "node src/index.js",
     "dev": "nodemon src/index.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/soumadip-dev/VedaCLI.git"
-  },
   "keywords": [
     "cli",
     "ai",
@@ -31,18 +27,8 @@
   ],
   "author": "Soumadip Majila",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/soumadip-dev/VedaCLI/issues"
-  },
-  "homepage": "https://github.com/soumadip-dev/VedaCLI#readme",
   "devDependencies": {
     "nodemon": "^3.0.1"
-  },
-  "engines": {
-    "node": ">=14.0.0"
-  },
-  "bin": {
-    "vedacli": "./src/index.js"
   },
   "dependencies": {
     "@ai-sdk/google": "^2.0.25",
