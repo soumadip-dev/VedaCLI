@@ -11,6 +11,7 @@ const ENV = {
   ORBITAI_MODEL: process.env.ORBITAI_MODEL,
   BETTER_AUTH_SECRET: process.env.BETTER_AUTH_SECRET,
   BETTER_AUTH_URL: process.env.BETTER_AUTH_URL,
+  FRONTEND_URL: process.env.FRONTEND_URL,
 };
 
 export default ENV;
