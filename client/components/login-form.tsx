@@ -80,15 +80,28 @@ const LoginForm = () => {
     setMounted(true);
   }, []);
 
+  const handleSignIn = async () => {
+    setIsLoading(true);
+    try {
+      await authClient.signIn.social({
+        provider: 'github',
+        callbackURL: 'http://localhost:3000',
+      });
+    } catch (error) {
+      console.error('Sign in error:', error);
+      toast.error('Failed to sign in');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className="flex flex-col gap-6 justify-center items-center min-h-screen bg-gradient-to-br from-gray-950 via-[#050508] to-black relative overflow-hidden">
       {/* Enhanced Neural Network Grid */}
       <div className="absolute inset-0 bg-[linear-gradient(rgba(6,182,212,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(168,85,247,0.03)_1px,transparent_1px)] bg-[size:60px_60px] [mask-image:radial-gradient(ellipse_at_center,black_10%,transparent_70%)] animate-grid-flow"></div>
 
-      
       <div className="absolute inset-0 opacity-[0.15] bg-[radial-gradient(circle_at_1px_1px,rgba(6,182,212,0.2)_1px,transparent_0)] bg-[length:30px_30px]"></div>
 
-      
       <div className="absolute inset-0 overflow-hidden">
         {Array.from({ length: 8 }).map((_, i) => (
           <motion.div
@@ -107,7 +120,6 @@ const LoginForm = () => {
         ))}
       </div>
 
-      
       {mounted && (
         <div className="absolute inset-0">
           {FLOATING_PARTICLES.map((particle, i) => (
@@ -136,7 +148,6 @@ const LoginForm = () => {
         </div>
       )}
 
-      
       <motion.div
         className="absolute top-1/4 left-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl"
         animate={{
@@ -176,7 +187,6 @@ const LoginForm = () => {
         }}
       />
 
-      
       <motion.div
         className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent shadow-2xl shadow-cyan-400/30"
         animate={{ x: ['-100%', '100%'] }}
@@ -189,7 +199,6 @@ const LoginForm = () => {
       />
 
       <div className="flex flex-col gap-8 justify-center items-center max-w-4xl w-full relative z-10">
-        
         <motion.div
           className="flex flex-col items-center justify-center space-y-6 text-center"
           initial={{ opacity: 0, y: 30 }}
@@ -197,7 +206,6 @@ const LoginForm = () => {
           transition={{ duration: 0.8 }}
         >
           <div className="relative">
-            
             <motion.div
               className="absolute -inset-6 bg-gradient-to-r from-cyan-400 via-purple-500 to-blue-400 rounded-3xl blur-3xl opacity-20"
               animate={{ rotate: [0, 360] }}
@@ -214,7 +222,6 @@ const LoginForm = () => {
                 <Bot className="h-20 w-20 text-cyan-400 relative drop-shadow-2xl" />
               </div>
 
-              
               <div className="flex flex-col">
                 <motion.h1
                   className="text-7xl font-black bg-gradient-to-r from-cyan-400 via-purple-400 to-blue-400 bg-clip-text text-transparent drop-shadow-2xl tracking-tighter"
@@ -255,7 +262,6 @@ const LoginForm = () => {
             </motion.div>
           </div>
 
-        
           <motion.div
             className="flex items-center gap-4 text-gray-300 bg-gray-800/60 backdrop-blur-xl rounded-3xl px-8 py-4 border border-gray-700 shadow-2xl group hover:border-cyan-400/40 transition-all duration-300"
             initial={{ opacity: 0, scale: 0.9 }}
@@ -288,24 +294,20 @@ const LoginForm = () => {
           transition={{ delay: 0.5 }}
         >
           <Card className="w-full max-w-lg border-gray-800 bg-gray-900/80 backdrop-blur-2xl shadow-2xl relative overflow-hidden group hover:border-cyan-400/40 transition-all duration-500">
-            
             <motion.div
               className="absolute inset-0 bg-gradient-to-r from-cyan-400/0 via-cyan-400/10 to-cyan-400/0 opacity-0 group-hover:opacity-100 transition-opacity duration-1000 rounded-2xl"
               animate={{ x: ['-100%', '100%'] }}
               transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
             />
 
-            
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(6,182,212,0.05)_0%,transparent_50%),radial-gradient(circle_at_70%_80%,rgba(168,85,247,0.05)_0%,transparent_50%)]" />
 
-            
             <motion.div
               className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-cyan-400 via-purple-500 to-blue-400 shadow-2xl shadow-cyan-400/30"
               animate={{ x: ['-100%', '100%'] }}
               transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
             />
 
-            
             <motion.div
               className="absolute -bottom-16 -right-16 w-40 h-40 border border-cyan-400/20 rounded-full"
               animate={{ rotate: 360 }}
@@ -319,20 +321,14 @@ const LoginForm = () => {
 
             <CardContent className="p-8">
               <div className="flex flex-col gap-6">
-                
                 <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
                   <Button
                     variant="outline"
                     className="w-full h-20 border-gray-700 bg-gray-800/50 hover:bg-gray-700/70 transition-all duration-300 group/btn relative overflow-hidden hover:border-cyan-400/50 rounded-2xl shadow-lg"
                     type="button"
-                    onClick={() =>
-                      authClient.signIn.social({
-                        provider: 'github',
-                        callbackURL: 'http://localhost:3000',
-                      })
-                    }
+                    onClick={handleSignIn}
+                    disabled={isLoading}
                   >
-                    
                     <motion.div
                       className="absolute inset-0 bg-[linear-gradient(90deg,transparent_0%,rgba(6,182,212,0.1)_50%,transparent_100%)] opacity-0 group-hover/btn:opacity-100 rounded-2xl"
                       animate={{ x: ['-100%', '100%'] }}
@@ -340,28 +336,35 @@ const LoginForm = () => {
                     />
 
                     <div className="relative flex items-center justify-center gap-5">
-                      
                       <motion.div
                         className="p-4 bg-gray-700/50 rounded-2xl group-hover/btn:bg-cyan-400/20 transition-all duration-300 border border-gray-600 group-hover/btn:border-cyan-400/50 relative shadow-lg"
-                        whileHover={{ rotate: 360 }}
+                        whileHover={{ rotate: isLoading ? 0 : 360 }}
                         transition={{ duration: 0.5 }}
                       >
                         <div className="absolute inset-0 bg-cyan-400/10 rounded-2xl opacity-0 group-hover/btn:opacity-100" />
-                        <Image
-                          src={'/github.svg'}
-                          alt="Github"
-                          height={28}
-                          width={28}
-                          className="size-7 invert relative drop-shadow-lg"
-                        />
+                        {isLoading ? (
+                          <motion.div
+                            animate={{ rotate: 360 }}
+                            transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+                            className="size-7 border-2 border-cyan-400 border-t-transparent rounded-full"
+                          />
+                        ) : (
+                          <Image
+                            src={'/github.svg'}
+                            alt="Github"
+                            height={28}
+                            width={28}
+                            className="size-7 invert relative drop-shadow-lg"
+                          />
+                        )}
                       </motion.div>
 
                       <div className="flex flex-col items-start">
                         <span className="font-bold text-white drop-shadow-lg tracking-wider group-hover/btn:text-cyan-300 transition-colors text-xl">
-                          INITIATE_SYSTEM
+                          {isLoading ? 'INITIALIZING...' : 'INITIATE_SYSTEM'}
                         </span>
                         <span className="text-sm text-gray-400 group-hover/btn:text-cyan-200 transition-colors drop-shadow">
-                          Authenticate via GitHub
+                          {isLoading ? 'Authenticating...' : 'Authenticate via GitHub'}
                         </span>
                       </div>
                     </div>
