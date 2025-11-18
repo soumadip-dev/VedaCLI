@@ -10,6 +10,7 @@ import { Command } from 'commander'; // helps build CLI commands.
 import { login } from './commands/auth/login.js';
 import { logout } from './commands/auth/logout.js';
 import { whoami } from './commands/auth/profile.js';
+import { wakeUp } from './commands/ai/wakeUp.js';
 
 dotenv.config();
 
@@ -43,7 +44,8 @@ async function main() {
     .description(chalk.hex('#10B981').bold('✨ Veda CLI - A CLI based AI Tool'))
     .addCommand(login)
     .addCommand(logout)
-    .addCommand(whoami);
+    .addCommand(whoami)
+    .addCommand(wakeUp);
 
   // If the user just types veda, it automatically shows the help menu.
   program.action(() => {
