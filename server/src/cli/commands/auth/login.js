@@ -19,6 +19,20 @@ const CLIENT_ID = ENV.GITHUB_CLIENT_ID;
 export const CONFIG_DIR = path.join(os.homedir(), '.better-auth');
 export const TOKEN_FILE = path.join(CONFIG_DIR, 'token.json');
 
+// Color theme constants
+const THEME = {
+  primary: '#8B5CF6',
+  secondary: '#06D6A0',
+  accent: '#64B5F6',
+  warning: '#FFD166',
+  error: '#EF4444',
+  success: '#10B981',
+  info: '#6366F1',
+  muted: '#6B7280',
+  background: '#0F0F23',
+};
+
+//* Login command
 export async function loginAction(opts) {
   const options = z.object({
     serverUrl: z.string().optional(),
@@ -29,19 +43,19 @@ export async function loginAction(opts) {
   const clientId = options.clientId || CLIENT_ID;
 
   // Modern intro with clean styling
-  intro(chalk.hex('#8B5CF6').bold('🔐 Secure Authentication'));
+  intro(chalk.hex(THEME.primary).bold('🔐 Secure Authentication'));
 
   const existingToken = await getStoredToken();
   const expired = await isTokenExpired();
 
   if (existingToken && !expired) {
     const shouldReAuth = await confirm({
-      message: 'Active session detected. Re-authenticate?',
+      message: chalk.hex(THEME.warning)('🔄 Active session detected. Re-authenticate?'),
       initialValue: false,
     });
 
     if (isCancel(shouldReAuth) || !shouldReAuth) {
-      cancel('Authentication cancelled');
+      cancel(chalk.hex(THEME.muted)('Authentication cancelled'));
       process.exit(0);
     }
   }
@@ -52,7 +66,7 @@ export async function loginAction(opts) {
   });
 
   const spinner = yoctoSpinner({
-    text: 'Initializing secure connection...',
+    text: chalk.hex(THEME.info)('Initializing secure connection...'),
     color: 'blue',
   });
   spinner.start();
@@ -65,7 +79,7 @@ export async function loginAction(opts) {
     spinner.stop();
 
     if (error || !data) {
-      logger.error(`Authorization failed: ${error?.error_description}`);
+      logger.error(chalk.hex(THEME.error)(`❌ Authorization failed: ${error?.error_description}`));
       process.exit(1);
     }
 
@@ -78,18 +92,18 @@ export async function loginAction(opts) {
       expires_in,
     } = data;
 
-    console.log(chalk.hex('#06D6A0').bold('🔑 Device Authorization Required'));
-
+    console.log(chalk.hex(THEME.secondary).bold('🔑 Device Authorization Required'));
+    console.log('');
     console.log(
-      `🌐 Visit: ${chalk.underline.hex('#64B5F6')(verification_uri || verification_uri_complete)}`
+      chalk.hex(THEME.accent)(
+        `   🌐 Visit: ${chalk.underline(verification_uri || verification_uri_complete)}`
+      )
     );
-
-    console.log(`📝 Enter code: ${chalk.hex('#FFD166').bold(user_code)}`);
-
+    console.log(chalk.hex(THEME.warning)(`   📝 Enter code: ${chalk.bold(user_code)}`));
     console.log('');
 
     const shouldOpen = await confirm({
-      message: 'Launch browser automatically?',
+      message: chalk.hex(THEME.info)('🌐 Launch browser automatically?'),
       initialValue: true,
     });
 
@@ -99,8 +113,8 @@ export async function loginAction(opts) {
     }
 
     console.log(
-      chalk.gray(
-        `⏱️ Waiting for authorization (expires in ${Math.floor(expires_in / 60)} minutes)...`
+      chalk.hex(THEME.muted)(
+        `   ⏱️ Waiting for authorization (expires in ${Math.floor(expires_in / 60)} minutes)...`
       )
     );
 
@@ -110,24 +124,25 @@ export async function loginAction(opts) {
       const saved = await storeToken(token);
 
       if (!saved) {
-        console.log(chalk.yellow('\n⚠️  Warning: Could not save authentication token.'));
-        console.log(chalk.yellow('You may need to login again on next use.'));
+        console.log(
+          chalk.hex(THEME.warning)('\n⚠️  Warning: Could not save authentication token.')
+        );
+        console.log(chalk.hex(THEME.muted)('   You may need to login again on next use.'));
       }
 
-      // TODO => GET THE USER DATA
-      outro(
-        chalk.green(
-          // `✅ Login successful! Welcome ${session?.user?.name || session?.user?.email || 'User'}`
-          'Login Successfull'
-        )
-      );
+      outro(chalk.hex(THEME.success).bold('✅ Login Successful!'));
 
-      console.log(chalk.gray(`\n📁 Token saved to: ${TOKEN_FILE}`));
-      console.log(chalk.gray('   You can now use AI commands without logging in again.\n'));
+      console.log(chalk.hex(THEME.muted)(`\n📁 Token saved to: ${TOKEN_FILE}`));
+      console.log(
+        chalk.hex(THEME.muted)('   You can now use AI commands without logging in again.\n')
+      );
     }
   } catch (error) {
     spinner.stop();
-    console.error(chalk.hex('#FF6B6B').bold('\n🚫 Authentication failed:'), error.message);
+    console.error(
+      chalk.hex(THEME.error).bold('\n🚫 Authentication failed:'),
+      chalk.hex(THEME.muted)(error.message)
+    );
     process.exit(1);
   }
 }
@@ -144,7 +159,7 @@ async function pollForToken(authClient, deviceCode, clientId, initialInterval) {
   return new Promise((resolve, reject) => {
     const poll = async () => {
       dots = (dots + 1) % 4;
-      spinner.text = chalk.gray(
+      spinner.text = chalk.hex(THEME.muted)(
         `Polling for authorization${'.'.repeat(dots)}${' '.repeat(3 - dots)}`
       );
       if (!spinner.isSpinning) spinner.start();
@@ -161,8 +176,6 @@ async function pollForToken(authClient, deviceCode, clientId, initialInterval) {
         });
 
         if (data?.access_token) {
-          // TODO => REMOVE IT
-          console.log(chalk.bold.yellow(`Your access token: ${data.access_token}`));
           spinner.stop();
           resolve(data);
           return;
@@ -176,23 +189,25 @@ async function pollForToken(authClient, deviceCode, clientId, initialInterval) {
               break;
             case 'access_denied':
               spinner.stop();
-              logger.error('Access was denied by the user');
+              logger.error(chalk.hex(THEME.error)('❌ Access was denied by the user'));
               process.exit(1);
               break;
             case 'expired_token':
               spinner.stop();
-              logger.error('The device code has expired. Please try again.');
+              logger.error(
+                chalk.hex(THEME.error)('❌ The device code has expired. Please try again.')
+              );
               process.exit(1);
               break;
             default:
               spinner.stop();
-              logger.error(`Error: ${error.error_description}`);
+              logger.error(chalk.hex(THEME.error)(`❌ Error: ${error.error_description}`));
               process.exit(1);
           }
         }
       } catch (error) {
         spinner.stop();
-        logger.error(`Network error: ${err.message}`);
+        logger.error(chalk.hex(THEME.error)(`❌ Network error: ${error.message}`));
         process.exit(1);
       }
       setTimeout(poll, pollingInterval * 1000);
@@ -200,8 +215,9 @@ async function pollForToken(authClient, deviceCode, clientId, initialInterval) {
     setTimeout(poll, pollingInterval * 1000);
   });
 }
+
 export const login = new Command('login')
-  .description('Authenticate with secure provider')
+  .description(chalk.hex(THEME.info)('Authenticate with secure provider'))
   .option('--server-url <url>', 'Authentication server URL', URL)
   .option('--client-id <id>', 'OAuth client identifier', CLIENT_ID)
   .action(loginAction);
