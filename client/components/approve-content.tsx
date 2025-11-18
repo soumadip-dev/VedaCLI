@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
 import { authClient } from '@/lib/auth-client';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useState } from 'react';
+import { useState, useEffect } from 'react'; // Added useEffect
 import { CheckCircle, XCircle, Smartphone, Cpu, Satellite, BrainCircuit } from 'lucide-react';
 import { toast } from 'sonner';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -18,7 +18,23 @@ const DeviceApprovalContent = () => {
     approve: false,
     deny: false,
   });
+  const [shouldRedirect, setShouldRedirect] = useState(false); // Added state for redirect
 
+  // Fixed: Use useEffect for side effects like redirects
+  useEffect(() => {
+    if (!isPending && (!data?.session || !data?.user)) {
+      setShouldRedirect(true);
+    }
+  }, [data, isPending]);
+
+  // Fixed: Handle redirect in useEffect
+  useEffect(() => {
+    if (shouldRedirect) {
+      router.push('/sign-in');
+    }
+  }, [shouldRedirect, router]);
+
+  // Show loading state
   if (isPending) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-black via-gray-900 to-black relative overflow-hidden">
@@ -36,8 +52,13 @@ const DeviceApprovalContent = () => {
     );
   }
 
-  if (!data?.session && !data?.user) {
-    router.push('/sign-in');
+  // Fixed: Return null during redirect instead of calling router.push in render
+  if (shouldRedirect) {
+    return null;
+  }
+
+  // Fixed: Also check if we have the required data before rendering
+  if (!data?.session || !data?.user) {
     return null;
   }
 
@@ -51,8 +72,8 @@ const DeviceApprovalContent = () => {
       router.push('/');
     } catch (error) {
       toast.error('Failed to approve device');
+      setIsProcessing({ approve: false, deny: false });
     }
-    setIsProcessing({ approve: false, deny: false });
   };
 
   const handleDeny = async () => {
@@ -65,8 +86,8 @@ const DeviceApprovalContent = () => {
       router.push('/');
     } catch (error) {
       toast.error('Failed to deny device');
+      setIsProcessing({ approve: false, deny: false });
     }
-    setIsProcessing({ approve: false, deny: false });
   };
 
   return (

@@ -4,13 +4,19 @@ import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { ShieldAlert, Cpu, Network, Satellite, BrainCircuit } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Spinner } from '@/components/ui/spinner';
 
 const DeviceAuthorizationPage = () => {
   const [userCode, setUserCode] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [mounted, setMounted] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
   const router = useRouter();
+
+  // Fix: Use useEffect to handle mounting
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
@@ -35,12 +41,30 @@ const DeviceAuthorizationPage = () => {
     }
   }
 
-  async function handleCodeChange(event: React.ChangeEvent<HTMLInputElement>) {
+  function handleCodeChange(event: React.ChangeEvent<HTMLInputElement>) {
     let value = event.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
     if (value.length > 4) {
       value = value.slice(0, 4) + '-' + value.slice(4, 8);
     }
     setUserCode(value);
+  }
+
+  // Fix: Prevent rendering mismatched content during hydration
+  if (!isMounted) {
+    return (
+      <div className="flex flex-col items-center justify-center h-screen bg-gradient-to-br from-black via-gray-900 to-black relative overflow-hidden">
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:60px_60px] [mask-image:radial-gradient(ellipse_at_center,black_10%,transparent_70%)]"></div>
+        <Spinner className="h-8 w-8 border-cyan-400" />
+        <motion.p
+          className="mt-4 text-gray-400 font-mono"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5 }}
+        >
+          LOADING_NEURAL_INTERFACE...
+        </motion.p>
+      </div>
+    );
   }
 
   return (
@@ -287,7 +311,10 @@ const DeviceAuthorizationPage = () => {
                   animate={{ x: ['-100%', '100%'] }}
                   transition={{ duration: 2, repeat: Infinity }}
                 />
-                <span className="relative">{isLoading ? 'VERIFYING...' : 'AUTHORIZE_DEVICE'}</span>
+                <span className="relative flex items-center justify-center gap-2">
+                  {isLoading && <Spinner className="h-4 w-4 border-white" />}
+                  {isLoading ? 'VERIFYING...' : 'AUTHORIZE_DEVICE'}
+                </span>
               </motion.button>
 
               <motion.div
