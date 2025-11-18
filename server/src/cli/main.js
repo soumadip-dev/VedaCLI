@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Makes the file runnable as a command in a terminal. Tells the system: “Run this script using Node.js.”
+// Makes the file runnable as a command in a terminal. Tells the system: "Run this script using Node.js."
 
 import dotenv from 'dotenv';
 import chalk from 'chalk'; // adds colors/styling to terminal text.
@@ -8,6 +8,8 @@ import boxen from 'boxen'; // adds boxes around text
 
 import { Command } from 'commander'; // helps build CLI commands.
 import { login } from './commands/auth/login.js';
+import { logout } from './commands/auth/logout.js';
+import { whoami } from './commands/auth/profile.js';
 
 dotenv.config();
 
@@ -29,6 +31,7 @@ async function main() {
     borderColor: '#6366F1',
     borderStyle: 'round',
     textAlignment: 'center',
+    backgroundColor: '#0F0F23',
   });
 
   console.log(boxedBanner);
@@ -38,7 +41,9 @@ async function main() {
   program
     .version('0.0.1')
     .description(chalk.hex('#10B981').bold('✨ Veda CLI - A CLI based AI Tool'))
-    .addCommand(login);
+    .addCommand(login)
+    .addCommand(logout)
+    .addCommand(whoami);
 
   // If the user just types veda, it automatically shows the help menu.
   program.action(() => {
@@ -57,7 +62,7 @@ main().catch(err => {
     margin: { top: 1, bottom: 1 },
     borderStyle: 'round',
     borderColor: '#DC2626',
-    backgroundColor: '#450A0A',
+    backgroundColor: '#1A0B0B',
     textAlignment: 'center',
   });
 
