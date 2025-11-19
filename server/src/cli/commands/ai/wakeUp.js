@@ -8,15 +8,31 @@ import { select } from '@clack/prompts';
 // import { startToolChat } from '../../chat/chat-with-ai-tool.js';
 // import { startAgentChat } from '../../chat/chat-with-ai-agent.js';
 
+// Color theme constants
+const THEME = {
+  primary: '#8B5CF6',
+  secondary: '#06D6A0',
+  accent: '#64B5F6',
+  warning: '#FFD166',
+  error: '#EF4444',
+  success: '#10B981',
+  info: '#6366F1',
+  muted: '#6B7280',
+  background: '#0F0F23',
+};
+
 const wakeUpAction = async () => {
   const token = await getStoredToken();
 
   if (!token?.access_token) {
-    console.log(chalk.red('Not authenticated. Please login.'));
-    return;
+    console.log(chalk.hex(THEME.error)('❌ Not authenticated. Please login first.'));
+    process.exit(1);
   }
 
-  const spinner = yoctoSpinner({ text: 'Fetching User Information...' });
+  const spinner = yoctoSpinner({
+    text: chalk.hex(THEME.info)('🔍 Fetching user information...'),
+    color: 'blue',
+  });
   spinner.start();
 
   const user = await prisma.user.findFirst({
@@ -36,29 +52,30 @@ const wakeUpAction = async () => {
   spinner.stop();
 
   if (!user) {
-    console.log(chalk.red('User not found.'));
-    return;
+    console.log(chalk.hex(THEME.error)('❌ User not found. Please login again.'));
+    process.exit(1);
   }
 
-  console.log(chalk.green(`\nWelcome back, ${user.name}!\n`));
+  console.log(chalk.hex(THEME.success).bold(`\n👋 Welcome back, ${user.name}!`));
+  console.log(chalk.hex(THEME.muted)('────────────────────'));
 
   const choice = await select({
-    message: 'Select an option:',
+    message: chalk.hex(THEME.primary).bold('🚀 Choose your AI experience:'),
     options: [
       {
         value: 'chat',
-        label: 'Chat',
-        hint: 'Simple chat with AI',
+        label: chalk.hex(THEME.secondary)('💬 Simple Chat'),
+        hint: chalk.hex(THEME.muted)('Direct conversation with AI'),
       },
       {
         value: 'tool',
-        label: 'Tool Calling',
-        hint: 'Chat with tools (Google Search, Code Execution)',
+        label: chalk.hex(THEME.accent)('🛠️  Tool Calling'),
+        hint: chalk.hex(THEME.muted)('Enhanced chat with Google Search, Code Execution'),
       },
       {
         value: 'agent',
-        label: 'Agentic Mode',
-        hint: 'Advanced AI agent (Coming soon)',
+        label: chalk.hex(THEME.warning)('🤖 Agentic Mode'),
+        hint: chalk.hex(THEME.muted)('Advanced AI agent (Coming soon)'),
       },
     ],
   });
@@ -66,17 +83,20 @@ const wakeUpAction = async () => {
   switch (choice) {
     case 'chat':
       // await startChat('chat');
-      console.log('chat is selected');
+      console.log(chalk.hex(THEME.success).bold('\n💬 Launching Simple Chat...'));
       break;
     case 'tool':
       // await startToolChat();
-      console.log('tool is selected');
+      console.log(chalk.hex(THEME.success).bold('\n🛠️  Launching Tool Calling...'));
       break;
     case 'agent':
       // await startAgentChat();
-      console.log('agent is selected');
+      console.log(chalk.hex(THEME.warning).bold('\n🤖 Agentic Mode Coming Soon!'));
+      console.log(chalk.hex(THEME.muted)('   Stay tuned for advanced AI capabilities'));
       break;
   }
 };
 
-export const wakeUp = new Command('wakeup').description('Wake up the AI').action(wakeUpAction);
+export const wakeUp = new Command('wakeup')
+  .description(chalk.hex(THEME.info)('Wake up and interact with AI'))
+  .action(wakeUpAction);
