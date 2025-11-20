@@ -11,41 +11,61 @@
 <table align="center">
   <tr>
     <td align="center">
-      <img src="./client/screenshots/Login-Page-frontend.png" alt="Login Page">
+      <img src="./client/screenshots/welcome_screen.png" alt="Welcome Screen">
     </td>
     <td align="center">
-      <img src="./client/screenshots/Home-Page-frontend.png" alt="Register Page">
+      <img src="./client/screenshots/auth.png" alt="Authentication Screen">
+    </td>
+    <td align="center">
+      <img src="./client/screenshots/first_screen_cli.png" alt="CLI Interface">
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="./client/screenshots/simple_chat.png" alt="Simple Chat">
+    </td>
+    <td align="center">
+      <img src="./client/screenshots/Tool_cooling.png" alt="Tool Calling">
+    </td>
+    <td align="center">
+      <img src="./client/screenshots/Tool_cooling.png" alt="Tool Calling Example">
     </td>
   </tr>
 </table>
 
 ## 🌟 Features
 
-**🚧 Under development**
+- **Device Authorization** using GitHub OAuth
+- **Simple Chat**: Direct conversation with AI
+- **Tool Calling**: Enhanced chat with additional capabilities:
+  - **Google Search**: Get latest data, useful content, news, and real-time information
+  - **Code Execution**: Generate and execute Python code to perform calculations, solve problems, or provide accurate information
+  - **URL Context**: Analyze specific URLs directly from the prompt (supports up to 20 URLs per request)
+- **Agentic Mode**: Advanced AI agent (Currently in development)
 
 ## ⚙️ Tech Stack
 
-- **🎨 Frontend**: React, Nextjs
+- **🎨 Frontend**: React, Next.js
 - **🛠 Backend**: Node.js, Express.js, BetterAuth
-- **🗄 Database**: Postgres, Prisma
+- **🗄 Database**: PostgreSQL, Prisma
 
 ## 📦 Installation
 
-### 1. Clone and setup
+### 1. Clone and Setup
 
 ```bash
 git clone https://github.com/soumadip-dev/VedaCLI-MERN.git
 cd VedaCLI-MERN
 ```
 
-### 2. Frontend setup
+### 2. Frontend Setup
 
 ```bash
 cd client
 npm install
 ```
 
-### 3. Backend setup
+### 3. Backend Setup
 
 ```bash
 cd server
@@ -58,7 +78,7 @@ npm run dev:link
 veda --version
 ```
 
-#### Available Scripts in backend
+#### Available Scripts (Backend)
 
 | Script             | Purpose               |
 | ------------------ | --------------------- |
@@ -67,13 +87,15 @@ veda --version
 | `npm run cli`      | Test CLI locally      |
 | `npm run dev:link` | Setup global CLI link |
 
-### Usage
+## Usage
 
 After installation, you can use the `veda` command globally:
 
 ```bash
-veda --help
-veda --version
+veda --help    # Show help
+veda --version # Show version
+veda login     # Login to your account
+veda wakeup    # Wake up the AI
 ```
 
 ---
