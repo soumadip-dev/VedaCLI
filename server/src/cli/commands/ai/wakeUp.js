@@ -5,7 +5,7 @@ import { getStoredToken } from '../../../lib/token.js';
 import prisma from '../../../lib/db.js';
 import { select } from '@clack/prompts';
 import { startChat } from '../../chat/chat-with-ai.js';
-// import { startToolChat } from '../../chat/chat-with-ai-tool.js';
+import { startToolChat } from '../../chat/chat-with-ai-tool.js';
 // import { startAgentChat } from '../../chat/chat-with-ai-agent.js';
 
 // Color theme constants
@@ -83,11 +83,10 @@ const wakeUpAction = async () => {
   switch (choice) {
     case 'chat':
       await startChat('chat');
-      // console.log(chalk.hex(THEME.success).bold('\n💬 Launching Simple Chat...'));
       break;
     case 'tool':
-      // await startToolChat();
-      console.log(chalk.hex(THEME.success).bold('\n🛠️  Launching Tool Calling...'));
+      await startToolChat();
+
       break;
     case 'agent':
       // await startAgentChat();
