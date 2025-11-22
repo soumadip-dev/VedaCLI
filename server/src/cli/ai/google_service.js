@@ -93,4 +93,20 @@ export class AIService {
 
     return fullResponse;
   }
+
+  //* Generate structured output
+  async generateStructured(schema, prompt) {
+    try {
+      const result = await generateObject({
+        model: this.model,
+        schema: schema,
+        prompt: prompt,
+      });
+
+      return result.object;
+    } catch (error) {
+      console.error(chalk.red('AI Structured Generation Error:'), error.message);
+      throw error;
+    }
+  }
 }

@@ -6,7 +6,7 @@ import prisma from '../../../lib/db.js';
 import { select } from '@clack/prompts';
 import { startChat } from '../../chat/chat-with-ai.js';
 import { startToolChat } from '../../chat/chat-with-ai-tool.js';
-// import { startAgentChat } from '../../chat/chat-with-ai-agent.js';
+import { startAgentChat } from '../../chat/chat-with-ai-agent.js';
 
 // Color theme constants
 const THEME = {
@@ -75,7 +75,7 @@ const wakeUpAction = async () => {
       {
         value: 'agent',
         label: chalk.hex(THEME.warning)('Agentic Mode'),
-        hint: chalk.hex(THEME.muted)('Advanced AI agent (Coming soon)'),
+        hint: chalk.hex(THEME.muted)('Generate complete applications from descriptions'),
       },
     ],
   });
@@ -89,9 +89,7 @@ const wakeUpAction = async () => {
 
       break;
     case 'agent':
-      // await startAgentChat();
-      console.log(chalk.hex(THEME.warning).bold('\n🤖 Agentic Mode Coming Soon!'));
-      console.log(chalk.hex(THEME.muted)('   Stay tuned for advanced AI capabilities'));
+      await startAgentChat();
       break;
   }
 };

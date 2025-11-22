@@ -5,7 +5,7 @@
 </h1>
 
 <p align="center">
-  An AI-powered command-line interface built on Gemini.
+  An intelligent command-line interface powered by Google's Gemini, bringing AI capabilities directly to your terminal.
 </p>
 
 <table align="center">
@@ -28,7 +28,7 @@
       <img src="./client/screenshots/Tool_cooling.png" alt="Tool Calling">
     </td>
     <td align="center">
-      <img src="./client/screenshots/Tool_cooling.png" alt="Tool Calling Example">
+      <img src="./client/screenshots/agent-mode.png" alt="Agent Mode">
     </td>
   </tr>
 </table>
@@ -41,7 +41,7 @@
   - **Google Search**: Get latest data, useful content, news, and real-time information
   - **Code Execution**: Generate and execute Python code to perform calculations, solve problems, or provide accurate information
   - **URL Context**: Analyze specific URLs directly from the prompt (supports up to 20 URLs per request)
-- **Agentic Mode**: Advanced AI agent (Currently in development)
+- **Agent Mode**: Advanced AI agent to create applications using structured output.
 
 ## ⚙️ Tech Stack
 
@@ -65,12 +65,51 @@ cd client
 npm install
 ```
 
+Create `.env.local` in the `client` directory:
+
+```env
+NEXT_PUBLIC_AUTH_BASE_URL=<your_backend_url>
+```
+
 ### 3. Backend Setup
 
 ```bash
 cd server
 npm install
+```
 
+Create `.env` in the `server` directory:
+
+```env
+# Google Gemini API (Get from aisdk.com)
+GOOGLE_GENERATIVE_AI_API_KEY=<your_google_gemini_api_key>
+ORBITAI_MODEL=gemini-2.5-flash
+
+# Server Configuration
+PORT=<your_port_number>
+NODE_ENV=development
+
+# Database
+DATABASE_URL=<your_postgresql_database_url>
+
+# Better Auth
+BETTER_AUTH_SECRET=<your_better_auth_secret>
+BETTER_AUTH_URL=<your_backend_url>
+
+# GitHub OAuth
+GITHUB_CLIENT_ID=<your_github_oauth_client_id>
+GITHUB_CLIENT_SECRET=<your_github_oauth_client_secret>
+
+# URL Configuration
+FRONTEND_URL=<your_frontend_url>
+BASE_URL=<your_backend_url>
+```
+
+### 4. CLI Setup
+
+Inside the `server` directory:
+
+```bash
 # Make CLI executable and create global symlink
 npm run dev:link
 
@@ -87,7 +126,7 @@ veda --version
 | `npm run cli`      | Test CLI locally      |
 | `npm run dev:link` | Setup global CLI link |
 
-## Usage
+## 💻 Usage
 
 After installation, you can use the `veda` command globally:
 
@@ -99,25 +138,3 @@ veda wakeup    # Wake up the AI
 ```
 
 ---
-
-## CLI Dependencies Overview
-
-### 1. Boxen
-
-Used to add **formatted boxes** around text in the CLI for better visual presentation.
-
-### 2. Chalk
-
-Used for **coloring and styling text** in the terminal output.
-
-### 3. Figlet
-
-Converts normal text into **decorative ASCII art banners**.
-
-### 4. Inquirer
-
-Helps create **interactive command-line prompts** for user input.
-
-### 5. Ora
-
-Used to display a **spinner or loading indicator** in the terminal.
