@@ -60,8 +60,8 @@
 ### 1. Clone and Setup
 
 ```bash
-git clone https://github.com/soumadip-dev/VedaCLI-MERN.git
-cd VedaCLI-MERN
+git clone https://github.com/soumadip-dev/VedaCLI.git
+cd VedaCLI
 ```
 
 ### 2. Frontend Setup
