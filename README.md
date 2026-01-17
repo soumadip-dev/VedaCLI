@@ -11,37 +11,43 @@
 <table align="center">
   <tr>
     <td align="center">
-      <img src="./client/screenshots/welcome_screen.png" alt="Welcome Screen">
+      <img src="./client/screenshots/welcome_screen.png" alt="Welcome Screen" width="400" height="300">
     </td>
     <td align="center">
-      <img src="./client/screenshots/auth.png" alt="Authentication Screen">
+      <img src="./client/screenshots/auth.png" alt="Authentication Screen" width="400" height="300">
     </td>
     <td align="center">
-      <img src="./client/screenshots/first_screen_cli.png" alt="CLI Interface">
+      <img src="./client/screenshots/first_screen_cli.png" alt="CLI Interface" width="400" height="300">
     </td>
   </tr>
   <tr>
     <td align="center">
-      <img src="./client/screenshots/simple_chat.png" alt="Simple Chat">
+      <img src="./client/screenshots/simple_chat.png" alt="Simple Chat" width="400" height="300">
     </td>
     <td align="center">
-      <img src="./client/screenshots/Tool_cooling.png" alt="Tool Calling">
+      <img src="./client/screenshots/Tool_cooling.png" alt="Tool Calling" width="400" height="300">
     </td>
     <td align="center">
-      <img src="./client/screenshots/agent-mode.png" alt="Agent Mode">
+      <img src="./client/screenshots/agent-mode.png" alt="Agent Mode" width="400" height="300">
     </td>
   </tr>
 </table>
 
-## 🌟 Features
+---
 
-- **Device Authorization** using GitHub OAuth
-- **Simple Chat**: Direct conversation with AI
-- **Tool Calling**: Enhanced chat with additional capabilities:
-  - **Google Search**: Get latest data, useful content, news, and real-time information
-  - **Code Execution**: Generate and execute Python code to perform calculations, solve problems, or provide accurate information
-  - **URL Context**: Analyze specific URLs directly from the prompt (supports up to 20 URLs per request)
-- **Agent Mode**: Advanced AI agent to create applications using structured output.
+## 🎬 Demo Video
+
+[VedaCli](https://www.linkedin.com/posts/soumadip-majila-dgp_just-built-vedacli-an-ai-powered-command-line-activity-7399306793140502528-OsY0?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAD1aMJQBxnv5DdAHrtZuCweFePs_SWP_DFE)
+
+## 🔋 Features
+
+- **🔐 Device Authorization** – Using GitHub OAuth for secure authentication
+- **💬 Simple Chat** – Direct conversation with AI through your terminal
+- **🛠️ Tool Calling** – Enhanced chat with additional capabilities:
+  - **🔍 Google Search** – Get latest data, useful content, news, and real-time information
+  - **💻 Code Execution** – Generate and execute Python code to perform calculations, solve problems, or provide accurate information
+  - **🌐 URL Context** – Analyze specific URLs directly from the prompt (supports up to 20 URLs per request)
+- **🤖 Agent Mode** – Advanced AI agent to create applications using structured output
 
 ## ⚙️ Tech Stack
 
@@ -49,7 +55,7 @@
 - **🛠 Backend**: Node.js, Express.js, BetterAuth
 - **🗄 Database**: PostgreSQL, Prisma
 
-## 📦 Installation
+## 🤸 Installation
 
 ### 1. Clone and Setup
 
